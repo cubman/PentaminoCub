@@ -19,11 +19,11 @@ namespace PentaminoCub.Figures
             this.z = z;
         }
 
-        public bool inCub(int size, Point3D pos)
+        public bool inCub(int size, Point3D pentaSize)
         {
-            int x = this.x + pos.x;
-            int y = this.y + pos.y;
-            int z = this.z + pos.z;
+            int x = this.x + pentaSize.x - 1;
+            int y = this.y + pentaSize.y - 1;
+            int z = this.z + pentaSize.z - 1;
 
             return (x >= 0) && (x < size) && (y >= 0) && (y < size) && (z >= 0) && (z < size);
         }
