@@ -10,6 +10,9 @@ namespace PentaminoCub
     {
         static void Main(string[] args)
         {
+            Solution s = new Solution(5);
+
+            s.printSolution();
         }
     }
 }

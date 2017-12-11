@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PentaminoCub.Figures
 {
-    public class Cub
+    public class Cub : IComparable
     {
         List<List<List<int>>> cub;
         public int size { get; }
@@ -21,7 +21,24 @@ namespace PentaminoCub.Figures
 
             filledLayers = Enumerable.Repeat(0, size).ToList();
 
-            this.size = size; 
+            this.size = size;
+        }
+
+        public Cub copy()
+        {
+            Cub cp = new Cub(size);
+
+            for (int i = 0; i < size; ++i)
+            {
+                for (int j = 0; j < size; ++j)
+                    for (int k = 0; k < size; ++k)
+                        cp.cub[i][j][k] = cub[i][j][k];
+
+
+                cp.filledLayers[i] = filledLayers[i];
+            }
+
+            return cp;
         }
 
         public void addPoint(int layer)
@@ -55,6 +72,35 @@ namespace PentaminoCub.Figures
         public bool isFreePosition(Point3D point)
         {
             return cub[point.x][point.y][point.z] == 0;
+        }
+
+        public void print()
+        {
+            for (int i = 0; i < size; ++i)
+            {
+                Console.Out.WriteLine("{0} слой", i + 1);
+                for (int j = 0; j < size; ++j)
+                {
+                    for (int k = 0; k < size; ++k)
+                        Console.Out.Write("{0} ", cub[i][j][k]);
+                    Console.Out.WriteLine();
+                }
+            }
+        }
+
+        public bool isGathered()
+        {
+            bool res = true;
+            foreach (var line in filledLayers)
+                res &= line == size * size;
+
+            return res;
+        }
+
+        public int CompareTo(object obj)
+        {
+            Cub c = (Cub)obj;
+            return c.hueristicCost() - hueristicCost();
         }
     }
 }
