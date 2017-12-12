@@ -248,7 +248,7 @@ namespace PentaminoCub.Figures
                 point.movePoint(0, 0, 0),
                 point.movePoint(0, 1, 0),
                 point.movePoint(-1, 1, 0),
-                point.movePoint(-1, 2, 1),
+                point.movePoint(-1, 2, 0),
                 point.movePoint(-1, 3, 0)};
 
             return new Tuple<bool, Point3D[]>(canBeAccess(point, cub, points), points);
@@ -261,7 +261,7 @@ namespace PentaminoCub.Figures
                 point.movePoint(0, 0, 0),
                 point.movePoint(0, 1, 0),
                 point.movePoint(1, 1, 0),
-                point.movePoint(1, 2, 1),
+                point.movePoint(1, 2, 0),
                 point.movePoint(1, 3, 0)};
 
             return new Tuple<bool, Point3D[]>(canBeAccess(point, cub, points), points);

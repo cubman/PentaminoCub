@@ -12,7 +12,7 @@ namespace PentaminoCub
         int p_size;
         Cub cub, solution;
 
-        SortedSet<Cub> priorityInOperations;
+        PriorityList priorityInOperations = new PriorityList();
 
         List<Pentamino> pentaminoes;
 
@@ -25,7 +25,7 @@ namespace PentaminoCub
 
             this.p_size = p_size;
 
-            priorityInOperations.Add(cub);
+            priorityInOperations.push(cub);
         }
 
         public void solve()
@@ -35,12 +35,11 @@ namespace PentaminoCub
 
         private void countSolution()
         {
-            Point3D start = new Point3D(0, 0, 0);
-
             if (priorityInOperations.Count == 0)
                 return;
 
-            Cub c = priorityInOperations.First();
+            Cub c = priorityInOperations.pop();
+            Point3D start = c.findFreePlace();
 
             if (c.isGathered())
             {
@@ -52,8 +51,17 @@ namespace PentaminoCub
 
             foreach(var fun in Pentamino.functions)
             {
-                countSolution();
+                Tuple<bool, Point3D[]> res = fun(start, c);
+                if (res.Item1)
+                {
+                    Cub cp = c.copy();
+
+                    cp.setPoints(res.Item2);
+                    priorityInOperations.push(cp);
+                }
+                
             }
+            countSolution();
         }
 
         public void printSolution()
