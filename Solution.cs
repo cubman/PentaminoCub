@@ -35,33 +35,35 @@ namespace PentaminoCub
 
         private void countSolution()
         {
-            if (priorityInOperations.Count == 0)
-                return;
-
-            Cub c = priorityInOperations.pop();
-            Point3D start = c.findFreePlace();
-
-            if (c.isGathered())
+            while (priorityInOperations.Count != 0)
             {
-                solution = c;
-                printSolution();
+                Cub c = priorityInOperations.pop();
+                Point3D start = c.findFreePlace();
 
-                return;
-            }
+                Console.Out.WriteLine("{0} {1} {2} {3} {4} - {5}", 
+                    c.filledLayers[0], c.filledLayers[1], c.filledLayers[2], c.filledLayers[3], c.filledLayers[4], priorityInOperations.Count);
 
-            foreach(var fun in Pentamino.functions)
-            {
-                Tuple<bool, Point3D[]> res = fun(start, c);
-                if (res.Item1)
+                if (c.isGathered())
                 {
-                    Cub cp = c.copy();
+                    solution = c;
+                    printSolution();
 
-                    cp.setPoints(res.Item2);
-                    priorityInOperations.push(cp);
+                    return;
                 }
-                
+
+                foreach (var fun in Pentamino.functions)
+                {
+                    Tuple<bool, Point3D[]> res = fun(start, c);
+                    if (res.Item1)
+                    {
+                        Cub cp = c.copy();
+
+                        cp.setPoints(res.Item2);
+                        priorityInOperations.push(cp);
+                    }
+
+                }
             }
-            countSolution();
         }
 
         public void printSolution()

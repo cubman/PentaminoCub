@@ -21,11 +21,8 @@ namespace PentaminoCub.Figures
 
         public bool inCub(int size, Point3D pentaSize)
         {
-            int x = this.x + pentaSize.x;
-            int y = this.y + pentaSize.y;
-            int z = this.z + pentaSize.z;
-
-            return (x >= 0) && (x < size) && (y >= 0) && (y < size) && (z >= 0) && (z < size);
+            return (pentaSize.x >= 0) && (pentaSize.x < size) 
+                && (pentaSize.y >= 0) && (pentaSize.y < size) && (pentaSize.z >= 0) && (pentaSize.z < size);
         }
 
         public Point3D movePoint(int x, int y, int z)

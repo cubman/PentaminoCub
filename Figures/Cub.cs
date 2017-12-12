@@ -11,7 +11,7 @@ namespace PentaminoCub.Figures
         List<List<List<int>>> cub = new List<List<List<int>>>();
         public int size { get; }
 
-        List<int> filledLayers;
+        public List<int> filledLayers { get; private set; }
         int pentaminoesAmount = 0;
 
         public Cub(int size)
@@ -128,10 +128,14 @@ namespace PentaminoCub.Figures
         public Point3D findFreePlace()
         {
             for (int i = 0; i < size; ++i)
-                for (int j = 0; j < size; ++j)
-                    for (int k = 0; k < size; ++k)
-                        if (cub[i][j][k] == -1)
-                            return new Point3D(k, j, i);
+                if (filledLayers[i] != size * size)
+                {
+                    for (int j = 0; j < size; ++j)
+                        for (int k = 0; k < size; ++k)
+                            if (cub[i][j][k] == -1)
+                                return new Point3D(k, j, i);
+                    throw new Exception();
+                }
 
             return new Point3D(-1, -1, -1);
         }
